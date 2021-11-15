@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAMES HERE"
+title: "Legal businesses in NYC"
+author: "Ridwan Olawin, Sarthak Arora, Arnav Saxena"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
