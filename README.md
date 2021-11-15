@@ -7,7 +7,7 @@ Question 3: Is there any bias involved when it comes to giving business licenses
 
 
 
-Link to bookdown: rao53.github.io/legalbusinessnyc/
+Link to bookdown: https://rao53.github.io/legalbusinessNYC/
 
 
 This repo was initially generated from a bookdown template available here: https://github.com/jtr13/EDAVtemplate
