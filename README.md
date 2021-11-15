@@ -1,6 +1,7 @@
 Data description: This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. 
 
 **Potential Questions
+**
 
 Question 1: What businesses/industries are popular in different neighborhoods/boroughs? What about marginalized neighborhoods?
 
