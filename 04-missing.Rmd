@@ -1,1 +1,5 @@
 # Missing values
+
+```{r}
+print("life")
+```
