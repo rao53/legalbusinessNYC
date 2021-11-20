@@ -79,7 +79,7 @@ plot_missing <- function(data_frame, percent = TRUE) {
 ```
 
 ```{r,fig.width = 18,fig.height = 13}
-df_nyc_data = read_csv("Legally_Operating_Businesses.csv")
+df_nyc_data = read_csv("./Legally_Operating_Businesses.csv")
 plot_missing(df_nyc_data,percent = TRUE)
 ```
 

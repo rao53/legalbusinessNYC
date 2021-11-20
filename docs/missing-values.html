@@ -24,7 +24,7 @@
 <meta name="author" content="Ridwan Olawin, Sarthak Arora, Arnav Saxena" />
 
 
-<meta name="date" content="2021-11-19" />
+<meta name="date" content="2021-11-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
   
 <link rel="prev" href="data-transformation.html"/>
 <link rel="next" href="results.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -101,7 +101,20 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
-<pre><code>## [1] &quot;life&quot;</code></pre>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-7-1.png" width="1728" /></p>
+<p>We get 364 missing patterns in our dataset which we believe is reasonable since we had ~300,000 observations in our data.</p>
+<p>Further, our original dataset has 27 columns in total. As we can see 3 columns have more than 75% values missing. These columns are Secondary Street Name, Detail (open text variable describing the business), and Business Name 2 (for eg. McDonald’s BN2 is McD). We drop these 3 columns to improve our missing pattern analysis.</p>
+<p>To improve the visibility of our graph further we drop all the missing patterns with count &lt;=50 (&lt;0.016% observations). This step simply help us in building a neater and more readable graphic without losing out on any crucial information. Note that these two steps won’t have any impact on the percentage of missing patterns or percentage of missing column values since they both are essentially just trimming the height and width of the original graphic.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="1728" /></p>
+<p>Observations:
+</br>
+1. Post processing the dataset we find 30 most frequently occurring missing patterns.
+</br>
+2. As we can see, the missing pattern with complete cases tops the list which is a positive news for our analysis. This in a way also validates our decision to remove the three columns with more than 75% missing values. As we can see in the plot above ‘complete cases’ initially lied pretty much in the middle of the plot.
+</br>
+3. We notice that the columns with most missing values are either redundant columns or not really helping in answering the three questions we aim to probe. For instance, BrC (Borough Code) is redundant since we already have the Address Borough (AddressBr). Also, CnP (contact phone number) plays no role in our analysis. The same holds for most other columns except location, latitude, and longitude. Most of the important columns for our analysis e.g. Industry type(Ind), Zip Code(AZI), License Type(LcT), Expiration Date (LED) have negligible missing values.
+</br>
+4. We also notice that latitude, longitude and the location i.e, (lat, long) are missing in tandem to each other i.e, either all the three are missing or all the three are present.</p>
 
 </div>
             </section>
