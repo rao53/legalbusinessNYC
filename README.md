@@ -1,7 +1,6 @@
-Data description: This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. 
+Data description: This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. The data has 27 columns describing the license type, industry type, license expiration date etc and has ~300,000 observations.
 
-**Potential Questions
-**
+**Potential Questions**
 
 Question 1: What businesses/industries are popular in different neighborhoods/boroughs? What about marginalized neighborhoods?
 
