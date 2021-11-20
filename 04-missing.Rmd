@@ -1,1 +1,179 @@
 # Missing values
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(Lock5withR)
+```
+
+
+```{r}
+plot_missing <- function(data_frame, percent = TRUE) {
+  colnames(data_frame) = abbreviate(colnames(data_frame), minlength = 3)
+  missing_patterns <- data.frame(is.na(data_frame)) %>%
+  group_by_all() %>%
+  count(name = "count", sort = TRUE) %>%
+  ungroup()
+  
+  df1 = sort(colSums(is.na(data_frame)), decreasing = TRUE)
+  if (percent == TRUE){
+    p1 = data.frame(names = factor(names(df1), levels = names(df1)), df1) %>%
+      mutate(percent_ = (df1/sum(missing_patterns$count) * 100)) %>%
+      ggplot(aes(names, percent_)) +
+      geom_col(fill = "blue", alpha=.55) +
+      theme_bw()+
+      ylab('% rows missing') +
+      xlab(NULL)+
+      scale_y_continuous(limits=c(0,100))
+  }else{
+    p1 = data.frame(names = factor(names(df1), levels = names(df1)), df1) %>%
+      ggplot(aes(names, df1)) +
+      geom_col(fill = "blue", alpha=.55) +
+      theme_bw()+
+      ylab('num rows missing') +
+      xlab(NULL)
+  }
+  
+  df2 <- rownames_to_column(missing_patterns, "pattern")
+  df2$pattern = as.factor(as.numeric(df2$pattern))
+  mid_point <- ceiling(length(names(df1))/2)
+  df3 <- pivot_longer(df2,-c(count, pattern) ,names_to = "type",values_to = "missing_or_not")
+  df4 = df3 %>%
+    group_by(pattern) %>%
+    summarise(n = sum(missing_or_not)) %>%
+    ungroup()
+  missingRows = df4$pattern[df4$n == 0]
+
+  if (percent == TRUE){
+    p2 = df2 %>%
+      mutate(percent_ = (count/sum(count) * 100)) %>%
+      ggplot(aes(fct_rev(pattern), percent_)) + 
+      geom_col() +
+      coord_flip() + 
+      geom_col(fill = "blue", alpha = ifelse(df2$pattern %in% missingRows, 0.8, 0.4)) +
+      theme_bw()+
+      ylab('% rows') +
+      xlab(NULL) + 
+      scale_y_continuous(limits=c(0,100))
+  }else{
+    p2 = df2 %>%
+      ggplot(aes(fct_rev(pattern), count)) + 
+      geom_col() +
+      coord_flip() + 
+      geom_col(fill = "blue", alpha = ifelse(df2$pattern %in% missingRows, 0.8, 0.4)) +
+      theme_bw()+
+      ylab('row count') +
+      xlab(NULL)
+  }
+
+  p3 = ggplot(df3, aes(x=fct_relevel(type, names(df1)), y=fct_rev(pattern), fill=missing_or_not)) +
+    geom_tile(fill = ifelse(df3$missing_or_not == FALSE, 'grey','purple'), alpha = ifelse(df3$pattern %in% missingRows, 0.8, 0.4)) +
+    annotate("text", x = mid_point, y = missingRows, label = "complete cases") +
+    xlab('variable') +
+    ylab('missing pattern')
+  
+  p1 + plot_spacer() + p3 + p2 + 
+    plot_layout(widths = c(5, 1), heights = unit(c(3, 1), c('cm', 'null')))
+  
+}
+```
+
+```{r,fig.width = 18,fig.height = 13}
+df_nyc_data = read_csv("Legally_Operating_Businesses.csv")
+plot_missing(df_nyc_data,percent = TRUE)
+```
+
+We get 364 missing patterns in our dataset which we believe is reasonable since we had ~300,000 observations in our data. 
+
+Further, our original dataset has 27 columns in total. As we can see 3 columns have more than 75% values missing. These columns are Secondary Street Name, Detail (open text variable describing the business), and Business Name 2 (for eg. McDonald's BN2 is McD). We drop these 3 columns to improve our missing pattern analysis.
+
+To improve the visibility of our graph further we drop all the missing patterns with count <=50 (<0.016% observations). This step simply help us in building a neater and more readable graphic without losing out on any crucial information. Note that these two steps won't have any impact on the percentage of missing patterns or percentage of missing column values since they both are essentially just trimming the height and width of the original graphic.
+
+```{r}
+plot_missing_updated <- function(data_frame, percent = TRUE) {
+  colnames(data_frame) = abbreviate(colnames(data_frame), minlength = 3)
+  missing_patterns <- data.frame(is.na(data_frame)) %>%
+  group_by_all() %>%
+  count(name = "count", sort = TRUE) %>%
+  ungroup()
+  
+  df1 = sort(colSums(is.na(data_frame)), decreasing = TRUE)
+  if (percent == TRUE){
+    p1 = data.frame(names = factor(names(df1), levels = names(df1)), df1) %>%
+      mutate(percent_ = (df1/sum(missing_patterns$count) * 100)) %>%
+      ggplot(aes(names, percent_)) +
+      geom_col(fill = "blue", alpha=.55) +
+      theme_bw()+
+      ylab('% rows missing') +
+      xlab(NULL)+
+      scale_y_continuous(limits=c(0,100))
+  }else{
+    p1 = data.frame(names = factor(names(df1), levels = names(df1)), df1) %>%
+      ggplot(aes(names, df1)) +
+      geom_col(fill = "blue", alpha=.55) +
+      theme_bw()+
+      ylab('num rows missing') +
+      xlab(NULL)
+  }
+  
+  df2 <- rownames_to_column(missing_patterns, "pattern")
+  df2$pattern = as.factor(as.numeric(df2$pattern))
+  mid_point <- ceiling(length(names(df1))/2)
+  df2 = filter(df2,df2$count > 50)
+  df3 <- pivot_longer(df2,-c(count, pattern) ,names_to = "type",values_to = "missing_or_not")
+  df3 = filter(df3,df3$count> 50)
+  df4 = df3 %>%
+    group_by(pattern) %>%
+    summarise(n = sum(missing_or_not)) %>%
+    ungroup()
+  missingRows = df4$pattern[df4$n == 0]
+
+  if (percent == TRUE){
+    p2 = df2 %>%
+      mutate(percent_ = (count/sum(count) * 100)) %>%
+      ggplot(aes(fct_rev(pattern), percent_)) + 
+      geom_col() +
+      coord_flip() + 
+      geom_col(fill = "blue", alpha = ifelse(df2$pattern %in% missingRows, 0.8, 0.4)) +
+      theme_bw()+
+      ylab('% rows') +
+      xlab(NULL) + 
+      scale_y_continuous(limits=c(0,100))
+  }else{
+    p2 = df2 %>%
+      ggplot(aes(fct_rev(pattern), count)) + 
+      geom_col() +
+      coord_flip() + 
+      geom_col(fill = "blue", alpha = ifelse(df2$pattern %in% missingRows, 0.8, 0.4)) +
+      theme_bw()+
+      ylab('row count') +
+      xlab(NULL)
+  }
+
+  p3 = ggplot(df3, aes(x=fct_relevel(type, names(df1)), y=fct_rev(pattern), fill=missing_or_not)) +
+    geom_tile(fill = ifelse(df3$missing_or_not == FALSE, 'grey','purple'), alpha = ifelse(df3$pattern %in% missingRows, 0.8, 0.4)) +
+    annotate("text", x = mid_point, y = missingRows, label = "complete cases") +
+    xlab('variable') +
+    ylab('missing pattern')
+  
+  p1 + plot_spacer() + p3 + p2 + 
+    plot_layout(widths = c(5, 1), heights = unit(c(3, 1), c('cm', 'null')))
+  
+}
+```
+
+
+```{r,fig.width = 18,fig.height = 13}
+df_nyc_data_clean = select(df_nyc_data,-c("Secondary Address Street Name","Detail","Business Name 2"))
+plot_missing_updated(df_nyc_data_clean,percent = TRUE)
+```
+
+Observations:
+</br>
+1. Post processing the dataset we find 30 most frequently occurring missing patterns. 
+</br>
+2. As we can see, the missing pattern with complete cases tops the list which is a positive news for our analysis. This in a way also validates our decision to remove the three columns with more than 75% missing values. As we can see in the plot above 'complete cases' initially lied pretty much in the middle of the plot. 
+</br>
+3. We notice that the columns with most missing values are either redundant columns or not really helping in answering the three questions we aim to probe. For instance, BrC (Borough Code) is redundant since we already have the Address Borough (AddressBr). Also, CnP (contact phone number) plays no role in our analysis. The same holds for most other columns except location, latitude, and longitude. Most of the important columns for our analysis e.g. Industry type(Ind), Zip Code(AZI), License Type(LcT), Expiration Date (LED) have negligible missing values. 
+</br>
+4. We also notice that latitude, longitude and the location i.e, (lat, long) are missing in tandem to each other i.e, either all the three are missing or all the three are present.
