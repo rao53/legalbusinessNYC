@@ -4,15 +4,206 @@
 library(tidyverse)
 library(patchwork)
 library(Lock5withR)
+library(ggplot2)
+library(vcd)
+library(dplyr)
+library(plotly)
+library(viridis)
+library(forcats)
+library(ggridges)
+library(parcoords)
 ```
 
 
 
-```{r}
+```{r,fig.width = 13,fig.height = 13}
 df_nyc_data = read_csv("./Legally_Operating_Businesses.csv")
 df_nyc_data_clean = select(df_nyc_data,-c("Secondary Address Street Name","Detail","Business Name 2"))
+df_nyc_data_clean_borough = filter(df_nyc_data_clean,!df_nyc_data_clean$`Address Borough` %in% c("BRONX","QUEENS","BROOKLYN","MANHATTAN"))
 
-plot_histogram <- function(data_frame, x_axis, y_axis, facet) {
-  
-}
+# Part 1
+borough_license_count <- df_nyc_data_clean_borough %>%
+  group_by(Industry, `Address Borough`) %>%
+  summarize(count = n()) %>%
+  ungroup()
+
+borough_license_count = borough_license_count %>% drop_na()
+
+Licence_Count_Across_Boroughs = ggplot(borough_license_count, aes(x = count, y = reorder(Industry, count), color = `Address Borough`)) +
+  geom_point() +
+  ggtitle("Licence Count Across Boroughs") +
+  theme_linedraw() +
+  theme(legend.position = "top")
+Licence_Count_Across_Boroughs
+
+# Part 8
+  # df2 %>% select(-Year) %>% 
+  #   parcoords(rownames = F 
+  #   , brushMode = "1D-axes"
+  #   , reorderable = T
+  #   , queue = T
+  #   , color = list(
+  #     colorBy = "Region"
+  #     ,colorScale = "scaleOrdinal"
+  #     ,colorScheme = "schemeCategory10"
+  #     )
+  #   , withD3 = TRUE
+  #   )
 ```
+**OBSERVATION**
+
+-
+
+
+
+```{r,fig.width = 13,fig.height = 13}
+Total_Count_Across_Industries = df_nyc_data_clean_borough %>%
+  group_by(Industry) %>%
+  count() %>%
+  ungroup() %>%
+  ggplot(aes(n, reorder(Industry, n))) +
+  geom_point() +
+  ggtitle("Top count for licences") +
+  theme_linedraw()
+
+Total_Count_Across_Industries
+```
+**OBSERVATION**
+
+- 
+
+
+```{r,fig.width = 13,fig.height = 13}
+license_status_count <- df_nyc_data_clean_borough %>%
+  group_by(Industry, `License Status`) %>%
+  summarize(count = n()) %>%
+  ungroup()
+
+license_status_count = license_status_count %>% drop_na()
+
+total_license_status <- license_status_count %>%
+  group_by(Industry) %>%
+  summarize(count = sum(count)) %>%
+  mutate(`License Status` = "Total")
+
+combine_lsc_tls <- bind_rows(license_status_count, total_license_status) %>%
+  mutate(Industry = fct_reorder2(Industry, `License Status` == "Total", -count))
+
+Licence_Count_based_status = ggplot(combine_lsc_tls, aes(x = count, y = reorder(Industry, count), color = `License Status`)) +
+  geom_point() +
+  ggtitle("Licence Status Count") +
+  theme_linedraw() +
+  theme(legend.position = "top")
+Licence_Count_based_status
+```
+**OBSERVATION**
+
+- 
+
+
+
+```{r,fig.width = 13,fig.height = 13}
+
+license_type_count <- df_nyc_data_clean_borough %>%
+  group_by(Industry, `License Type`) %>%
+  summarize(count = n()) %>%
+  ungroup()
+
+license_type_count = license_type_count %>% drop_na()
+
+Licence_Count_based_type = ggplot(license_type_count, aes(x = count, y = reorder(Industry, count), color = `License Type`)) +
+  geom_point() +
+  ggtitle("Licence Type Count") +
+  theme_linedraw() +
+  theme(legend.position = "top")
+Licence_Count_based_type
+```
+**OBSERVATION**
+
+- 
+
+
+```{r,fig.width = 13,fig.height = 13}
+df_nyc_data_clean_borough$creation_year = format(as.Date(df_nyc_data_clean_borough$`License Creation Date`, format="%d/%m/%Y"),"%Y")
+
+Industry_creationyear_count <- df_nyc_data_clean_borough %>%
+  group_by(Industry, creation_year) %>%
+  summarize(count = n()) %>%
+  ungroup()
+
+theme_heat <- theme_classic() +
+  theme(axis.line = element_blank(), axis.ticks = element_blank())
+
+Industry_creation_year_count = Industry_creationyear_count %>% drop_na(creation_year)
+Total_license_creation_year = ggplot(Industry_creation_year_count, aes(creation_year, Industry, fill = count)) +
+  geom_tile(color = "white") +
+  theme_heat +
+  scale_fill_viridis_c(direction = -1, end = .9) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  coord_equal() 
+Total_license_creation_year
+```
+**OBSERVATION**
+
+- 
+
+
+```{r,fig.width = 13,fig.height = 13}
+Industry_creation_year_status_count <- df_nyc_data_clean_borough %>%
+  group_by(Industry, creation_year, `License Status`) %>%
+  summarize(count = n()) %>%
+  ungroup()
+
+Industry_creation_year_status_count = Industry_creation_year_status_count %>% drop_na(creation_year)
+Industry_license_creation_year_status_count = ggplot(Industry_creation_year_status_count, aes(creation_year, Industry, fill = count)) +
+  geom_tile(color = "white") +
+  facet_wrap(~`License Status`) +
+  theme_heat +
+  scale_fill_viridis_c(direction = -1, end = .9) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  coord_equal() 
+Industry_license_creation_year_status_count
+```
+**OBSERVATION**
+
+- 
+
+
+```{r,fig.width = 13,fig.height = 13}
+Industry_creation_year_type_count <- df_nyc_data_clean_borough %>%
+  group_by(Industry, creation_year, `License Type`) %>%
+  summarize(count = n()) %>%
+  ungroup()
+
+Industry_creation_year_type_count = Industry_creation_year_type_count %>% drop_na(creation_year)
+Industry_license_creation_year_type_count = ggplot(Industry_creation_year_type_count, aes(creation_year, Industry, fill = count), cex.axis = 10) +
+  geom_tile(color = "white") +
+  facet_wrap(~`License Type`) +
+  theme_heat +
+  scale_fill_viridis_c(direction = -1, end = .9) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  coord_equal()
+Industry_license_creation_year_type_count
+```
+**OBSERVATION**
+
+- 
+
+
+```{r,fig.width = 13,fig.height = 13}
+
+df_nyc_data$date_diff = as.Date(df_nyc_data$`License Expiration Date`, format="%m/%d/%Y")-as.Date(df_nyc_data$`License Creation Date`, format="%m/%d/%Y")
+df_nyc_data$date_diff<-as.numeric(df_nyc_data$date_diff)
+df_nyc_data_clean_dates = filter(df_nyc_data,df_nyc_data$date_diff > 0)
+
+ridge_plot_dateDiff = ggplot(df_nyc_data_clean_dates, aes(date_diff, fct_reorder(Industry, date_diff))) +
+  geom_density_ridges(fill = "red", alpha = .3)
+ridge_plot_dateDiff
+```
+**OBSERVATION**
+
+- 
+
+
+
+
