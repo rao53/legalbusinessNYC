@@ -36,6 +36,7 @@ Licence_Count_Across_Boroughs = ggplot(borough_license_count, aes(x = count, y =
   theme(legend.position = "top")
 Licence_Count_Across_Boroughs
 
+# For Arnav
 # Part 8
   # df2 %>% select(-Year) %>% 
   #   parcoords(rownames = F 
