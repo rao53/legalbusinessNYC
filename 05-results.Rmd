@@ -1,1 +1,18 @@
 # Results
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(Lock5withR)
+```
+
+
+
+```{r}
+df_nyc_data = read_csv("./Legally_Operating_Businesses.csv")
+df_nyc_data_clean = select(df_nyc_data,-c("Secondary Address Street Name","Detail","Business Name 2"))
+
+plot_histogram <- function(data_frame, x_axis, y_axis, facet) {
+  
+}
+```
