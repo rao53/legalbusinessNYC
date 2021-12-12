@@ -230,3 +230,27 @@ ridge_plot_dateDiff
 Write-Up
 
 
+## Licence application acceptance rate across borough over 20 years
+```{r,fig.width = 8,fig.height = 8}
+df_nyc_data_applications = read_csv("./dataset_applications.csv")
+df_nyc_data_applications_grouped = df_nyc_data_applications %>%
+  group_by(Decision.Date,nyc.data.borough, Status) %>%
+  summarize(count = n()) %>%
+  ungroup()
+
+df_nyc_data_applications_grouped = df_nyc_data_applications_grouped %>% 
+  drop_na("Decision.Date") %>% 
+  pivot_wider(names_from = Status, values_from = count)
+
+df_nyc_data_applications_grouped = replace(df_nyc_data_applications_grouped,is.na(df_nyc_data_applications_grouped),0)
+df_nyc_data_applications_grouped = df_nyc_data_applications_grouped %>%
+  mutate(total = Issued + Denied) %>%
+  mutate(prop = Issued / total)
+
+ggplot(df_nyc_data_applications_grouped, aes(x = Decision.Date, y = prop)) + 
+  geom_line(aes(color = nyc.data.borough)) +
+  xlab("Decision date") +
+  ylab("Acceptance rate")
+```
+Write-Up
+
