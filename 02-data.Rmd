@@ -1,2 +1,32 @@
 # Data sources
 
+
+## Legally Operating Businesses in New York City Dataset
+
+**Source :**
+Legally Operating Businesses. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <https://data.cityofnewyork.us/Business/Legally-Operating-Businesses/w7w3-xahh>.
+
+This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. Note: Sightseeing guides and temporary street fair vendors are not included in this data set.
+
+**Due to COVID-19 pandemic, DCA extended certain license expiration dates and renewal application deadlines which are not reflected in this data set. For more information, visit nyc.gov/BusinessToolbox.**
+
+**Variables of the legally operating business dataset**
+
+```{r echo=FALSE}
+coldata <- read.csv("./Legally_Operating_Businesses.csv")
+colnames(coldata)
+```
+
+## License Applications in New York City Dataset
+
+**Source :**
+License Applications. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <https://data.cityofnewyork.us/Business/License-Applications/ptev-4hud>.
+
+This data set features license applications received during the last and current calendar years (2020 and 2021), including applications where a license was issued, denied, withdrawn, or remains pending. For a list of legally operating businesses, please refer to the DCA – Legally Operating Businesses data set referenced above.
+
+**Variables of the License Applications in New York City**
+
+```{r echo=FALSE}
+coldata <- read.csv("./dataset_applications.csv")
+colnames(coldata)
+```

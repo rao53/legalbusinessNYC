@@ -81,7 +81,11 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
+<li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#legally-operating-businesses-in-new-york-city-dataset"><i class="fa fa-check"></i><b>2.1</b> Legally Operating Businesses in New York City Dataset</a></li>
+<li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#license-applications-in-new-york-city-dataset"><i class="fa fa-check"></i><b>2.2</b> License Applications in New York City Dataset</a></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
@@ -116,7 +120,32 @@
             <section class="normal" id="section-">
 <div id="data-sources" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Data sources</h1>
+<div id="legally-operating-businesses-in-new-york-city-dataset" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Legally Operating Businesses in New York City Dataset</h2>
+<p><strong>Source :</strong>
+Legally Operating Businesses. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <a href="https://data.cityofnewyork.us/Business/Legally-Operating-Businesses/w7w3-xahh" class="uri">https://data.cityofnewyork.us/Business/Legally-Operating-Businesses/w7w3-xahh</a>.</p>
+<p>This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. Note: Sightseeing guides and temporary street fair vendors are not included in this data set.</p>
+<p><strong>Due to COVID-19 pandemic, DCA extended certain license expiration dates and renewal application deadlines which are not reflected in this data set. For more information, visit nyc.gov/BusinessToolbox.</strong></p>
+<p><strong>Variables of the legally operating business dataset</strong></p>
+<pre><code>##  [1] &quot;DCA.License.Number&quot;            &quot;License.Type&quot;                  &quot;License.Expiration.Date&quot;      
+##  [4] &quot;License.Status&quot;                &quot;License.Creation.Date&quot;         &quot;Industry&quot;                     
+##  [7] &quot;Business.Name&quot;                 &quot;Business.Name.2&quot;               &quot;Address.Building&quot;             
+## [10] &quot;Address.Street.Name&quot;           &quot;Secondary.Address.Street.Name&quot; &quot;Address.City&quot;                 
+## [13] &quot;Address.State&quot;                 &quot;Address.ZIP&quot;                   &quot;Contact.Phone.Number&quot;         
+## [16] &quot;Address.Borough&quot;               &quot;Borough.Code&quot;                  &quot;Community.Board&quot;              
+## [19] &quot;Council.District&quot;              &quot;BIN&quot;                           &quot;BBL&quot;                          
+## [22] &quot;NTA&quot;                           &quot;Census.Tract&quot;                  &quot;Detail&quot;                       
+## [25] &quot;Longitude&quot;                     &quot;Latitude&quot;                      &quot;Location&quot;</code></pre>
+</div>
+<div id="license-applications-in-new-york-city-dataset" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> License Applications in New York City Dataset</h2>
+<p><strong>Source :</strong>
+License Applications. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <a href="https://data.cityofnewyork.us/Business/License-Applications/ptev-4hud" class="uri">https://data.cityofnewyork.us/Business/License-Applications/ptev-4hud</a>.</p>
+<p>This data set features license applications received during the last and current calendar years (2020 and 2021), including applications where a license was issued, denied, withdrawn, or remains pending. For a list of legally operating businesses, please refer to the DCA – Legally Operating Businesses data set referenced above.</p>
+<p><strong>Variables of the License Applications in New York City</strong></p>
+<pre><code>## [1] &quot;Decision.Date&quot;    &quot;License.Category&quot; &quot;Status&quot;           &quot;nyc.data.borough&quot; &quot;Zip&quot;</code></pre>
 
+</div>
 </div>
             </section>
 
