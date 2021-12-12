@@ -252,5 +252,5 @@ ggplot(df_nyc_data_applications_grouped, aes(x = Decision.Date, y = prop)) +
   xlab("Decision date") +
   ylab("Acceptance rate")
 ```
-Write-Up
+Write-Up stuff
 
