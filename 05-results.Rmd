@@ -24,7 +24,10 @@ library(plotly)
 ## Total licences across industries
 ```{r,fig.width = 8,fig.height = 8}
 df_nyc_data = read_csv("./Legally_Operating_Businesses.csv")
-df_nyc_data_clean = select(df_nyc_data,-c("Secondary Address Street Name","Detail","Business Name 2"))
+df_nyc_data$date_diff = as.Date(df_nyc_data$`License Expiration Date`, format="%m/%d/%Y")-as.Date(df_nyc_data$`License Creation Date`, format="%m/%d/%Y")
+df_nyc_data$date_diff<-as.numeric(df_nyc_data$date_diff)
+df_nyc_data_clean_dates = filter(df_nyc_data,df_nyc_data$date_diff > 0)
+df_nyc_data_clean = select(df_nyc_data_clean_dates,-c("Secondary Address Street Name","Detail","Business Name 2"))
 df_nyc_data_clean_borough = filter(df_nyc_data_clean,!df_nyc_data_clean$`Address Borough` %in% c("BRONX","QUEENS","BROOKLYN","MANHATTAN"))
 
 Total_Count_Across_Industries = df_nyc_data_clean_borough %>%
@@ -216,11 +219,6 @@ Write-Up
 
 ## Duration of licences in days for various industries
 ```{r,fig.width = 8,fig.height = 8}
-
-df_nyc_data$date_diff = as.Date(df_nyc_data$`License Expiration Date`, format="%m/%d/%Y")-as.Date(df_nyc_data$`License Creation Date`, format="%m/%d/%Y")
-df_nyc_data$date_diff<-as.numeric(df_nyc_data$date_diff)
-df_nyc_data_clean_dates = filter(df_nyc_data,df_nyc_data$date_diff > 0)
-
 ridge_plot_dateDiff = ggplot(df_nyc_data_clean_dates, aes(date_diff, fct_reorder(Industry, date_diff))) +
   geom_density_ridges(fill = "red", alpha = .3) +
   xlab("Date Difference") +

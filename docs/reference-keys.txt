@@ -6,6 +6,7 @@ data-transformation
 legally-operating-businesses
 license-applications
 missing-values
+legally-operating-businesses-1
 results
 total-licences-across-industries
 marginalization-of-licences-across-boroughs
@@ -14,4 +15,5 @@ total-licences-across-industries-over-20-years
 duration-of-licences-in-days-for-various-industries
 licence-application-acceptance-rate-across-borough-over-20-years
 interactive-component
+nyc-business-license-acceptance-rates
 conclusion

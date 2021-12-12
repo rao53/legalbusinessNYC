@@ -11,3 +11,5 @@ To plot a graph showing the length of the licenses given to various industries w
 While doing the missing data analysis mentioned in Chapter 4 we found out that the columns Secondary Address Street Name, Detail and Business Name 2 have more than 75% values missing. Since these columns are not used by us anywhere, we remove these as well.
 
 ## License Applications
+
+We have created a new dataset having columns corresponding to the year of the “End Date” column, the “Status” column and the “License.Category” column from the License Applications dataset. We also have created a new column called “nyc.data.borough” which tells as to which borough the license application belongs to. This column was created by looking at the Zip Codes corresponding to the 5 boroughs i.e. Brooklyn, Staten Island, Bronx, Queens and Manhattan in the Legally Operating Businesses dataset and then mapping Zip codes in the License applications dataset to these boroughs. This enables us to see the acceptance rates in various boroughs across NYC over the years.

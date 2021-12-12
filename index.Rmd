@@ -7,3 +7,14 @@ site: bookdown::bookdown_site
 
 # Introduction
 
+In this project we have used the data on legal business operating in NYC to analyze the popularity of different businesses in the city as well as understand any disparity in terms of business licenses issued across different neighborhoods of the city.
+
+We have essentially answered the following three questions through this work:
+
+**Question 1**: What businesses/industries are popular in different neighborhoods? 
+
+**Question 2**: Change in trends in business types and number of licenses given over time? What impact did COVID have on the same? What impact did various laws passed in the past have on them?
+
+**Question 3**: Is there any bias involved when it comes to issuing business licenses in marginalized neighborhoods?
+
+To answer these questions, we have analyzed two datasets provided by the Department of Consumer Affairs and reported our results in the coming sections. We have also created an interactive app using R shiny for the readers to play around with the dataset and figure out the answer for some of these questions by themselves.
