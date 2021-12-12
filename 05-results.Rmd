@@ -12,15 +12,37 @@ library(viridis)
 library(forcats)
 library(ggridges)
 library(parcoords)
+
+library(RColorBrewer)
+library(tidyr)
+library(tibble)
+library(hrbrthemes)
+library(plotly)
 ```
 
 
-
-```{r,fig.width = 13,fig.height = 13}
+## Total licences across industries
+```{r,fig.width = 8,fig.height = 8}
 df_nyc_data = read_csv("./Legally_Operating_Businesses.csv")
 df_nyc_data_clean = select(df_nyc_data,-c("Secondary Address Street Name","Detail","Business Name 2"))
 df_nyc_data_clean_borough = filter(df_nyc_data_clean,!df_nyc_data_clean$`Address Borough` %in% c("BRONX","QUEENS","BROOKLYN","MANHATTAN"))
 
+Total_Count_Across_Industries = df_nyc_data_clean_borough %>%
+  group_by(Industry) %>%
+  count() %>%
+  ungroup() %>%
+  ggplot(aes(n, reorder(Industry, n))) +
+  geom_point() +
+  theme_linedraw() +
+  xlab("Count") +
+  ylab("Industry")
+
+Total_Count_Across_Industries
+```
+We can see that the home improvement and tobacco industry attains the maximum number of licenses and forms a cluster of their own.
+
+## Marginalization of licences across boroughs
+```{r,fig.width = 8,fig.height = 8}
 # Part 1
 borough_license_count <- df_nyc_data_clean_borough %>%
   group_by(Industry, `Address Borough`) %>%
@@ -31,49 +53,39 @@ borough_license_count = borough_license_count %>% drop_na()
 
 Licence_Count_Across_Boroughs = ggplot(borough_license_count, aes(x = count, y = reorder(Industry, count), color = `Address Borough`)) +
   geom_point() +
-  ggtitle("Licence Count Across Boroughs") +
   theme_linedraw() +
-  theme(legend.position = "top")
+  theme(legend.position = "top") + 
+  ylab("Industry")
 Licence_Count_Across_Boroughs
-
-# Part 8
-  # df2 %>% select(-Year) %>% 
-  #   parcoords(rownames = F 
-  #   , brushMode = "1D-axes"
-  #   , reorderable = T
-  #   , queue = T
-  #   , color = list(
-  #     colorBy = "Region"
-  #     ,colorScale = "scaleOrdinal"
-  #     ,colorScheme = "schemeCategory10"
-  #     )
-  #   , withD3 = TRUE
-  #   )
 ```
-**OBSERVATION**
-
--
 
 
-
-```{r,fig.width = 13,fig.height = 13}
-Total_Count_Across_Industries = df_nyc_data_clean_borough %>%
+```{r,fig.width = 8,fig.height = 8}
+top10Industries <- df_nyc_data_clean_borough %>%
+  drop_na(`Address Borough`) %>% 
   group_by(Industry) %>%
-  count() %>%
+  summarize(n = n()) %>%
+  slice_max(order_by = n, n = 10) %>%
+  pull(Industry)
+
+df_nyc_data_clean_borough_droppedNA = df_nyc_data_clean_borough %>%
+  drop_na(`Address Borough`) %>% 
+  group_by(Industry, `Address Borough`) %>%
+  summarize(count = n()) %>%
   ungroup() %>%
-  ggplot(aes(n, reorder(Industry, n))) +
-  geom_point() +
-  ggtitle("Top count for licences") +
-  theme_linedraw()
+  filter(Industry %in% top10Industries)
 
-Total_Count_Across_Industries
+ggplot(df_nyc_data_clean_borough_droppedNA, aes(fill=`Address Borough`, y=count, x=reorder(Industry, -count))) +
+  geom_bar(position="dodge", stat="identity") +
+  xlab("Industry") +
+  coord_flip()
 ```
-**OBSERVATION**
-
-- 
+Write - Up
 
 
-```{r,fig.width = 13,fig.height = 13}
+
+## Licence count across industries based on status/type
+```{r,fig.width = 8,fig.height = 8}
 license_status_count <- df_nyc_data_clean_borough %>%
   group_by(Industry, `License Status`) %>%
   summarize(count = n()) %>%
@@ -91,18 +103,16 @@ combine_lsc_tls <- bind_rows(license_status_count, total_license_status) %>%
 
 Licence_Count_based_status = ggplot(combine_lsc_tls, aes(x = count, y = reorder(Industry, count), color = `License Status`)) +
   geom_point() +
-  ggtitle("Licence Status Count") +
   theme_linedraw() +
-  theme(legend.position = "top")
+  theme(legend.position = "top") +
+  ylab("Industry")
 Licence_Count_based_status
 ```
-**OBSERVATION**
+Also on looking at the split across active and inactive licenses we can see that most of the licenses for home improvement contractors and tobacco retail dealers have expired. There is no split between active and inactive licenses for home improvement Salesperson and that is because all of these licenses have expired and are inactive (which we can infer from the heat maps shown below split by License Status). 
 
-- 
+Most of the industries have more inactive licenses than active licenses. But there are a few exceptions like Laundries and Electronic Cigarette Dealerships where we have more active licenses than inactive licenses. 
 
-
-
-```{r,fig.width = 13,fig.height = 13}
+```{r,fig.width = 8,fig.height = 8}
 
 license_type_count <- df_nyc_data_clean_borough %>%
   group_by(Industry, `License Type`) %>%
@@ -112,18 +122,21 @@ license_type_count <- df_nyc_data_clean_borough %>%
 license_type_count = license_type_count %>% drop_na()
 
 Licence_Count_based_type = ggplot(license_type_count, aes(x = count, y = reorder(Industry, count), color = `License Type`)) +
+  geom_segment(aes(yend=Industry), xend = 0) +
   geom_point() +
-  ggtitle("Licence Type Count") +
   theme_linedraw() +
-  theme(legend.position = "top")
+  theme(legend.position = "top") +
+  ylab("Industry") +
+  facet_grid(`License Type` ~ ., scales = "free_y", space = "free_y")
+
 Licence_Count_based_type
 ```
-**OBSERVATION**
-
-- 
+Looking at the split between license types we see that there are no industries with both License type Individual and Business. Most of the industries have license type Business, only a few Industries like Locksmith, projectionist, home improvement salesperson, general vendors etc. have been issued licenses of individual type.
 
 
-```{r,fig.width = 13,fig.height = 13}
+
+## Total licences across industries over 20 years
+```{r,fig.width = 8,fig.height = 10}
 df_nyc_data_clean_borough$creation_year = format(as.Date(df_nyc_data_clean_borough$`License Creation Date`, format="%d/%m/%Y"),"%Y")
 
 Industry_creationyear_count <- df_nyc_data_clean_borough %>%
@@ -134,76 +147,86 @@ Industry_creationyear_count <- df_nyc_data_clean_borough %>%
 theme_heat <- theme_classic() +
   theme(axis.line = element_blank(), axis.ticks = element_blank())
 
-Industry_creation_year_count = Industry_creationyear_count %>% drop_na(creation_year)
-Total_license_creation_year = ggplot(Industry_creation_year_count, aes(creation_year, Industry, fill = count)) +
-  geom_tile(color = "white") +
-  theme_heat +
-  scale_fill_viridis_c(direction = -1, end = .9) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  coord_equal() 
-Total_license_creation_year
+Industry_creation_year_count = Industry_creationyear_count %>% drop_na(creation_year) %>%
+  filter(creation_year > 1999)
+
+Total_license_creation_year = ggplot(Industry_creation_year_count, aes(creation_year, Industry)) +
+  geom_tile(aes(fill = count)) +
+  theme_ipsum() +
+  scale_fill_distiller(palette = "Spectral") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) 
+
+ggplotly(Total_license_creation_year)
 ```
-**OBSERVATION**
+We can clearly see that the tobacco retail dealer licenses have gradually decreased over the last 20 years.
+The electronic cigarette dealership licenses did not exist before 2018 as these dealerships were legally given licenses in 2018. We can see the sudden increase in the number of licenses in 2018 and how it drastically drops as a lot of studies showed how teenagers were getting addicted to vapes and eventually in July of 2020 they were banned in the city of New York.
 
-- 
 
-
-```{r,fig.width = 13,fig.height = 13}
+```{r,fig.width = 8,fig.height = 10}
 Industry_creation_year_status_count <- df_nyc_data_clean_borough %>%
   group_by(Industry, creation_year, `License Status`) %>%
   summarize(count = n()) %>%
   ungroup()
 
-Industry_creation_year_status_count = Industry_creation_year_status_count %>% drop_na(creation_year)
-Industry_license_creation_year_status_count = ggplot(Industry_creation_year_status_count, aes(creation_year, Industry, fill = count)) +
-  geom_tile(color = "white") +
+Industry_creation_year_status_count = Industry_creation_year_status_count %>% drop_na(creation_year) %>%
+  filter(creation_year > 1999)
+Industry_license_creation_year_status_count = ggplot(Industry_creation_year_status_count, aes(creation_year, Industry)) +
+  geom_tile(aes(fill = count)) +
+  scale_fill_distiller(palette = "Spectral") +
   facet_wrap(~`License Status`) +
-  theme_heat +
-  scale_fill_viridis_c(direction = -1, end = .9) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  coord_equal() 
-Industry_license_creation_year_status_count
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggplotly(Industry_license_creation_year_status_count)
 ```
-**OBSERVATION**
-
-- 
+For the heatmap split between active and inactive licenses we can clearly see that Industries like Ticket Seller Businesses, Sightseeing Bus, Motion Picture Projectionist, Catering Establishments, Cabaret etc. have no active licenses. And this makes sense because all these industries have been heavily affected by covid.
 
 
-```{r,fig.width = 13,fig.height = 13}
+```{r,fig.width = 8,fig.height = 10}
 Industry_creation_year_type_count <- df_nyc_data_clean_borough %>%
   group_by(Industry, creation_year, `License Type`) %>%
   summarize(count = n()) %>%
   ungroup()
 
-Industry_creation_year_type_count = Industry_creation_year_type_count %>% drop_na(creation_year)
-Industry_license_creation_year_type_count = ggplot(Industry_creation_year_type_count, aes(creation_year, Industry, fill = count), cex.axis = 10) +
-  geom_tile(color = "white") +
-  facet_wrap(~`License Type`) +
-  theme_heat +
-  scale_fill_viridis_c(direction = -1, end = .9) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  coord_equal()
-Industry_license_creation_year_type_count
+Industry_creation_year_type_count_bu = Industry_creation_year_type_count %>% drop_na(creation_year) %>%
+  filter(creation_year > 1999 & `License Type` == "Business") 
+
+Industry_creation_year_type_count_pe = Industry_creation_year_type_count %>% drop_na(creation_year) %>%
+  filter(creation_year > 1999 & `License Type` != "Business") 
+
+Industry_license_creation_year_type_count1 = ggplot(Industry_creation_year_type_count_bu, aes(creation_year, Industry)) +
+  geom_tile(aes(fill = count)) +
+  scale_fill_distiller(palette = "Spectral") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))  +
+  ggtitle("Industry vs Creation_Year based on Business licence type")
+
+ggplotly(Industry_license_creation_year_type_count1)
 ```
-**OBSERVATION**
 
-- 
+```{r,fig.width = 8,fig.height = 4}
+Industry_license_creation_year_type_count2 = ggplot(Industry_creation_year_type_count_pe, aes(creation_year, Industry)) +
+  geom_tile(aes(fill = count)) +
+  scale_fill_distiller(palette = "Spectral") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Industry vs Creation_Year based on Individual licence type")
+
+ggplotly(Industry_license_creation_year_type_count2)
+```
+Write-Up
 
 
-```{r,fig.width = 13,fig.height = 13}
+## Duration of licences in days for various industries
+```{r,fig.width = 8,fig.height = 8}
 
 df_nyc_data$date_diff = as.Date(df_nyc_data$`License Expiration Date`, format="%m/%d/%Y")-as.Date(df_nyc_data$`License Creation Date`, format="%m/%d/%Y")
 df_nyc_data$date_diff<-as.numeric(df_nyc_data$date_diff)
 df_nyc_data_clean_dates = filter(df_nyc_data,df_nyc_data$date_diff > 0)
 
 ridge_plot_dateDiff = ggplot(df_nyc_data_clean_dates, aes(date_diff, fct_reorder(Industry, date_diff))) +
-  geom_density_ridges(fill = "red", alpha = .3)
+  geom_density_ridges(fill = "red", alpha = .3) +
+  xlab("Date Difference") +
+  ylab("Industry")
 ridge_plot_dateDiff
 ```
-**OBSERVATION**
-
-- 
-
-
+Write-Up
 
 
