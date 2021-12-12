@@ -28,7 +28,7 @@ df_nyc_data$date_diff = as.Date(df_nyc_data$`License Expiration Date`, format="%
 df_nyc_data$date_diff<-as.numeric(df_nyc_data$date_diff)
 df_nyc_data_clean_dates = filter(df_nyc_data,df_nyc_data$date_diff > 0)
 df_nyc_data_clean = select(df_nyc_data_clean_dates,-c("Secondary Address Street Name","Detail","Business Name 2"))
-df_nyc_data_clean_borough = filter(df_nyc_data_clean,!df_nyc_data_clean$`Address Borough` %in% c("BRONX","QUEENS","BROOKLYN","MANHATTAN"))
+df_nyc_data_clean_borough = filter(df_nyc_data_clean,!df_nyc_data_clean$`Address Borough` %in% c("BRONX","QUEENS","BROOKLYN","MANHATTAN", "Outside NYC"))
 
 Total_Count_Across_Industries = df_nyc_data_clean_borough %>%
   group_by(Industry) %>%
@@ -44,7 +44,7 @@ Total_Count_Across_Industries
 ```
 We can see that the home improvement and tobacco industry attains the maximum number of licenses and forms a cluster of their own.
 
-## Marginalization of licences across boroughs
+## Popularity of businesses across boroughs
 ```{r,fig.width = 8,fig.height = 8}
 # Part 1
 borough_license_count <- df_nyc_data_clean_borough %>%
@@ -157,8 +157,9 @@ Total_license_creation_year = ggplot(Industry_creation_year_count, aes(creation_
   geom_tile(aes(fill = count)) +
   theme_ipsum() +
   scale_fill_distiller(palette = "Spectral", direction=2, trans = "log10", 
-                       name = "log10(Similarity)") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) 
+                       name = "log10(licence count)") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))  +
+  xlab("Licence creation year") 
 
 ggplotly(Total_license_creation_year)
 ```
@@ -177,9 +178,10 @@ Industry_creation_year_status_count = Industry_creation_year_status_count %>% dr
 Industry_license_creation_year_status_count = ggplot(Industry_creation_year_status_count, aes(creation_year, Industry)) +
   geom_tile(aes(fill = count)) +
   scale_fill_distiller(palette = "Spectral", direction=2, trans = "log10", 
-                       name = "log10(Similarity)") +
+                       name = "log10(licence count)") +
   facet_wrap(~`License Status`) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  xlab("Licence creation year") 
 
 ggplotly(Industry_license_creation_year_status_count)
 ```
@@ -201,9 +203,10 @@ Industry_creation_year_type_count_pe = Industry_creation_year_type_count %>% dro
 Industry_license_creation_year_type_count1 = ggplot(Industry_creation_year_type_count_bu, aes(creation_year, Industry)) +
   geom_tile(aes(fill = count)) +
   scale_fill_distiller(palette = "Spectral", direction=2, trans = "log10", 
-                       name = "log10(Similarity)") +
+                       name = "log10(licence count)") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))  +
-  ggtitle("Industry vs Creation_Year based on Business licence type")
+  ggtitle("Industry vs Creation_Year based on Business licence type") +
+  xlab("Licence creation year") 
 
 ggplotly(Industry_license_creation_year_type_count1)
 ```
@@ -212,22 +215,12 @@ ggplotly(Industry_license_creation_year_type_count1)
 Industry_license_creation_year_type_count2 = ggplot(Industry_creation_year_type_count_pe, aes(creation_year, Industry)) +
   geom_tile(aes(fill = count)) +
   scale_fill_distiller(palette = "Spectral", direction=2, trans = "log10", 
-                       name = "log10(Similarity)") +
+                       name = "log10(licence count)") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle("Industry vs Creation_Year based on Individual licence type")
+  ggtitle("Industry vs Creation_Year based on Individual licence type") +
+  xlab("Licence creation year") 
 
 ggplotly(Industry_license_creation_year_type_count2)
-```
-Write-Up
-
-
-## Duration of licences in days for various industries
-```{r,fig.width = 8,fig.height = 8}
-ridge_plot_dateDiff = ggplot(df_nyc_data_clean_dates, aes(date_diff, fct_reorder(Industry, date_diff))) +
-  geom_density_ridges(fill = "red", alpha = .3) +
-  xlab("Date Difference") +
-  ylab("Industry")
-ridge_plot_dateDiff
 ```
 Write-Up
 
@@ -256,4 +249,17 @@ ggplot(df_nyc_data_applications_grouped, aes(x = Decision.Date, y = prop)) +
   ylab("Acceptance rate")
 ```
 Write-Up stuff
+
+
+## Duration of licences in days for various industries
+```{r,fig.width = 8,fig.height = 8}
+ridge_plot_dateDiff = ggplot(df_nyc_data_clean_dates, aes(date_diff, fct_reorder(Industry, date_diff))) +
+  geom_density_ridges(fill = "red", alpha = .3) +
+  xlab("length of licences (Days)") +
+  ylab("Industry")
+ridge_plot_dateDiff
+```
+Write-Up
+
+
 

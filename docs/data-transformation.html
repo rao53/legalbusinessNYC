@@ -98,11 +98,11 @@
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#total-licences-across-industries"><i class="fa fa-check"></i><b>5.1</b> Total licences across industries</a></li>
-<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#marginalization-of-licences-across-boroughs"><i class="fa fa-check"></i><b>5.2</b> Marginalization of licences across boroughs</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#popularity-of-businesses-across-boroughs"><i class="fa fa-check"></i><b>5.2</b> Popularity of businesses across boroughs</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#licence-count-across-industries-based-on-statustype"><i class="fa fa-check"></i><b>5.3</b> Licence count across industries based on status/type</a></li>
 <li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#total-licences-across-industries-over-20-years"><i class="fa fa-check"></i><b>5.4</b> Total licences across industries over 20 years</a></li>
-<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#duration-of-licences-in-days-for-various-industries"><i class="fa fa-check"></i><b>5.5</b> Duration of licences in days for various industries</a></li>
-<li class="chapter" data-level="5.6" data-path="results.html"><a href="results.html#licence-application-acceptance-rate-across-borough-over-10-years"><i class="fa fa-check"></i><b>5.6</b> Licence application acceptance rate across borough over 10 years</a></li>
+<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#licence-application-acceptance-rate-across-borough-over-10-years"><i class="fa fa-check"></i><b>5.5</b> Licence application acceptance rate across borough over 10 years</a></li>
+<li class="chapter" data-level="5.6" data-path="results.html"><a href="results.html#duration-of-licences-in-days-for-various-industries"><i class="fa fa-check"></i><b>5.6</b> Duration of licences in days for various industries</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a>
 <ul>
@@ -133,7 +133,7 @@
 <p>We are using two datasets containing information about different types of licences issued in and around New York City. Our primal data set is the legally operating businesses data set containing most of the information we need and is used for the majority of the plots we generate. The licence applications dataset is used to plot the acceptance ratio across various boroughs. The challenge was to create a column which was similar to the address borough column in the legally operating businesses dataset as the column closest to that in the license applications was the City column which has Manhattan and Queens missing as Boroughs and has a lot of other entries as well which are not present in the Address borough column in our primal dataset.</p>
 <div id="legally-operating-businesses" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Legally Operating Businesses</h2>
-<p>On plotting the count of licences across the Address Borough column we notice that a lot of boroughs have been named twice. And the duplicate names with all capital letters have negligible rows in the dataset. Hence, we remove the entries with Address Borough values as “BRONX”,“QUEENS”,“BROOKLYN” and “MANHATTAN”.</p>
+<p>On plotting the count of licences across the Address Borough column we notice that a lot of boroughs have been named twice. And the duplicate names with all capital letters have negligible rows in the dataset. Hence, we remove the entries with Address Borough values as “BRONX”, “QUEENS”, “BROOKLYN”, “MANHATTAN” and “Outside NYC” as we are only considering boroughs in New York.</p>
 <p>To plot a graph showing the length of the licenses given to various industries we calculated the number of days between license creation and expiration date. During this we found that a lot of these values are negative. Hence we removed all such cases as well as it does not make sense for the license to expire before it is created.</p>
 <p>While doing the missing data analysis mentioned in Chapter 4 we found out that the columns Secondary Address Street Name, Detail and Business Name 2 have more than 75% values missing. Since these columns are not used by us anywhere, we remove these as well.</p>
 </div>
