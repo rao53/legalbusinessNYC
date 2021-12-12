@@ -18,6 +18,7 @@ library(tidyr)
 library(tibble)
 library(hrbrthemes)
 library(plotly)
+library(tidytext)
 ```
 
 
@@ -63,25 +64,32 @@ Licence_Count_Across_Boroughs
 ```
 
 
-```{r,fig.width = 8,fig.height = 8}
-top10Industries <- df_nyc_data_clean_borough %>%
-  drop_na(`Address Borough`) %>% 
-  group_by(Industry) %>%
-  summarize(n = n()) %>%
-  slice_max(order_by = n, n = 10) %>%
-  pull(Industry)
-
-df_nyc_data_clean_borough_droppedNA = df_nyc_data_clean_borough %>%
-  drop_na(`Address Borough`) %>% 
+```{r, fig.width = 8,fig.height = 8}
+df_test = df_nyc_data_clean_borough %>%
+  drop_na(`Address Borough`) %>%
   group_by(Industry, `Address Borough`) %>%
   summarize(count = n()) %>%
-  ungroup() %>%
-  filter(Industry %in% top10Industries)
-
-ggplot(df_nyc_data_clean_borough_droppedNA, aes(fill=`Address Borough`, y=count, x=reorder(Industry, -count))) +
-  geom_bar(position="dodge", stat="identity") +
+  ungroup()
+  
+  
+  
+df_cur = df_test %>%
+  group_by(`Address Borough`) %>%
+  top_n(10) %>%
+  ungroup %>%
+  mutate(`Address Borough` = as.factor(`Address Borough`),
+         Industry = reorder_within(Industry, count, `Address Borough`)) %>%
+  ggplot(aes(fill=`Address Borough`, y=count, x=Industry)) +
+  # geom_bar(position="dodge", stat="identity") +
+  geom_col(show.legend = FALSE) +
   xlab("Industry") +
-  coord_flip()
+  facet_wrap(~`Address Borough`, scales = "free_y") +
+  coord_flip() +
+  scale_x_reordered() +
+  scale_y_continuous(expand = c(0,0)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) 
+
+df_cur
 ```
 Write - Up
 
