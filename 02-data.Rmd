@@ -1,14 +1,22 @@
 # Data sources
 
+To answer the questions discussed in the previous sections, we used the data on license applications offered by the Department of Consumer Affairs (DCA), New York City. In particular, we used the following two datasets:
 
 ## Legally Operating Businesses in New York City Dataset
 
 **Source :**
 Legally Operating Businesses. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <https://data.cityofnewyork.us/Business/Legally-Operating-Businesses/w7w3-xahh>.
 
-This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. Note: Sightseeing guides and temporary street fair vendors are not included in this data set.
+This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. It specifically focuses on licenses that were given starting in the 1970s. Of the many variables, the following were of particular interest to us:
 
-**Due to COVID-19 pandemic, DCA extended certain license expiration dates and renewal application deadlines which are not reflected in this data set. For more information, visit nyc.gov/BusinessToolbox.**
+- Business Industry type (Tobacco dealer, Home Improvement Contractor, etc)
+- Business location (includes Zip, Borough, Council District, Longitudes, Latitudes)
+- License type (Individual vs Business)
+- License start and expiration dates
+
+Note: Sightseeing guides and temporary street fair vendors are not included in this data set. 
+
+**Due to the COVID-19 pandemic, DCA extended certain license expiration dates and renewal application deadlines which are not reflected in this data set. For more information, visit** <https://www1.nyc.gov/site/dca/businesses/licenses.page>.
 
 **Variables of the legally operating business dataset**
 
@@ -22,11 +30,17 @@ colnames(coldata)
 **Source :**
 License Applications. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <https://data.cityofnewyork.us/Business/License-Applications/ptev-4hud>.
 
-This data set features license applications received during the last and current calendar years (2020 and 2021), including applications where a license was issued, denied, withdrawn, or remains pending. For a list of legally operating businesses, please refer to the DCA – Legally Operating Businesses data set referenced above.
+This data set features license applications received during the last and current calendar years (2020 and 2021), including applications where a license was issued, denied, withdrawn, or remains pending. For a list of legally operating businesses, please refer to the DCA – Legally Operating Businesses data set referenced above. The following variables were of interest to us:
+
+- Business Industry type (Tobacco dealer, Home Improvement Contractor, etc)
+- Business location (includes Zip, Borough, Council District, Longitudes, Latitudes)
+- Application status (Issued, Denied, Withdrawn, Pending)
+- License acceptance date
+- Application Type
 
 **Variables of the License Applications in New York City**
 
 ```{r echo=FALSE}
-coldata <- read.csv("./dataset_applications.csv")
+coldata <- read.csv("./License_Applications.csv")
 colnames(coldata)
 ```

@@ -91,7 +91,10 @@
 <li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#legally-operating-businesses"><i class="fa fa-check"></i><b>3.1</b> Legally Operating Businesses</a></li>
 <li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#license-applications"><i class="fa fa-check"></i><b>3.2</b> License Applications</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#legally-operating-businesses-1"><i class="fa fa-check"></i><b>4.1</b> Legally Operating Businesses</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#total-licences-across-industries"><i class="fa fa-check"></i><b>5.1</b> Total licences across industries</a></li>
@@ -101,7 +104,10 @@
 <li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#duration-of-licences-in-days-for-various-industries"><i class="fa fa-check"></i><b>5.5</b> Duration of licences in days for various industries</a></li>
 <li class="chapter" data-level="5.6" data-path="results.html"><a href="results.html#licence-application-acceptance-rate-across-borough-over-20-years"><i class="fa fa-check"></i><b>5.6</b> Licence application acceptance rate across borough over 20 years</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
+<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interactive-component.html"><a href="interactive-component.html#nyc-business-license-acceptance-rates"><i class="fa fa-check"></i><b>6.1</b> NYC Business License Acceptance Rates</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -133,6 +139,7 @@
 </div>
 <div id="license-applications" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> License Applications</h2>
+<p>We have created a new dataset having columns corresponding to the year of the “End Date” column, the “Status” column and the “License.Category” column from the License Applications dataset. We also have created a new column called “nyc.data.borough” which tells as to which borough the license application belongs to. This column was created by looking at the Zip Codes corresponding to the 5 boroughs i.e. Brooklyn, Staten Island, Bronx, Queens and Manhattan in the Legally Operating Businesses dataset and then mapping Zip codes in the License applications dataset to these boroughs. This enables us to see the acceptance rates in various boroughs across NYC over the years.</p>
 
 </div>
 </div>

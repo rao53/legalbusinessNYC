@@ -91,7 +91,10 @@
 <li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#legally-operating-businesses"><i class="fa fa-check"></i><b>3.1</b> Legally Operating Businesses</a></li>
 <li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#license-applications"><i class="fa fa-check"></i><b>3.2</b> License Applications</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#legally-operating-businesses-1"><i class="fa fa-check"></i><b>4.1</b> Legally Operating Businesses</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#total-licences-across-industries"><i class="fa fa-check"></i><b>5.1</b> Total licences across industries</a></li>
@@ -101,7 +104,10 @@
 <li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#duration-of-licences-in-days-for-various-industries"><i class="fa fa-check"></i><b>5.5</b> Duration of licences in days for various industries</a></li>
 <li class="chapter" data-level="5.6" data-path="results.html"><a href="results.html#licence-application-acceptance-rate-across-borough-over-20-years"><i class="fa fa-check"></i><b>5.6</b> Licence application acceptance rate across borough over 20 years</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
+<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interactive-component.html"><a href="interactive-component.html#nyc-business-license-acceptance-rates"><i class="fa fa-check"></i><b>6.1</b> NYC Business License Acceptance Rates</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -124,12 +130,20 @@
             <section class="normal" id="section-">
 <div id="data-sources" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Data sources</h1>
+<p>To answer the questions discussed in the previous sections, we used the data on license applications offered by the Department of Consumer Affairs (DCA), New York City. In particular, we used the following two datasets:</p>
 <div id="legally-operating-businesses-in-new-york-city-dataset" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Legally Operating Businesses in New York City Dataset</h2>
 <p><strong>Source :</strong>
 Legally Operating Businesses. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <a href="https://data.cityofnewyork.us/Business/Legally-Operating-Businesses/w7w3-xahh" class="uri">https://data.cityofnewyork.us/Business/Legally-Operating-Businesses/w7w3-xahh</a>.</p>
-<p>This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. Note: Sightseeing guides and temporary street fair vendors are not included in this data set.</p>
-<p><strong>Due to COVID-19 pandemic, DCA extended certain license expiration dates and renewal application deadlines which are not reflected in this data set. For more information, visit nyc.gov/BusinessToolbox.</strong></p>
+<p>This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. It specifically focuses on licenses that were given starting in the 1970s. Of the many variables, the following were of particular interest to us:</p>
+<ul>
+<li>Business Industry type (Tobacco dealer, Home Improvement Contractor, etc)</li>
+<li>Business location (includes Zip, Borough, Council District, Longitudes, Latitudes)</li>
+<li>License type (Individual vs Business)</li>
+<li>License start and expiration dates</li>
+</ul>
+<p>Note: Sightseeing guides and temporary street fair vendors are not included in this data set.</p>
+<p><strong>Due to the COVID-19 pandemic, DCA extended certain license expiration dates and renewal application deadlines which are not reflected in this data set. For more information, visit</strong> <a href="https://www1.nyc.gov/site/dca/businesses/licenses.page" class="uri">https://www1.nyc.gov/site/dca/businesses/licenses.page</a>.</p>
 <p><strong>Variables of the legally operating business dataset</strong></p>
 <pre><code>##  [1] &quot;DCA.License.Number&quot;            &quot;License.Type&quot;                  &quot;License.Expiration.Date&quot;      
 ##  [4] &quot;License.Status&quot;                &quot;License.Creation.Date&quot;         &quot;Industry&quot;                     
@@ -145,9 +159,22 @@ Legally Operating Businesses. Data provided by Agency: Department of Consumer Af
 <h2><span class="header-section-number">2.2</span> License Applications in New York City Dataset</h2>
 <p><strong>Source :</strong>
 License Applications. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <a href="https://data.cityofnewyork.us/Business/License-Applications/ptev-4hud" class="uri">https://data.cityofnewyork.us/Business/License-Applications/ptev-4hud</a>.</p>
-<p>This data set features license applications received during the last and current calendar years (2020 and 2021), including applications where a license was issued, denied, withdrawn, or remains pending. For a list of legally operating businesses, please refer to the DCA – Legally Operating Businesses data set referenced above.</p>
+<p>This data set features license applications received during the last and current calendar years (2020 and 2021), including applications where a license was issued, denied, withdrawn, or remains pending. For a list of legally operating businesses, please refer to the DCA – Legally Operating Businesses data set referenced above. The following variables were of interest to us:</p>
+<ul>
+<li>Business Industry type (Tobacco dealer, Home Improvement Contractor, etc)</li>
+<li>Business location (includes Zip, Borough, Council District, Longitudes, Latitudes)</li>
+<li>Application status (Issued, Denied, Withdrawn, Pending)</li>
+<li>License acceptance date</li>
+<li>Application Type</li>
+</ul>
 <p><strong>Variables of the License Applications in New York City</strong></p>
-<pre><code>## [1] &quot;Decision.Date&quot;    &quot;License.Category&quot; &quot;Status&quot;           &quot;nyc.data.borough&quot; &quot;Zip&quot;</code></pre>
+<pre><code>##  [1] &quot;Application.ID&quot;            &quot;License.Number&quot;            &quot;License.Type&quot;              &quot;Application.or.Renewal&quot;   
+##  [5] &quot;Business.Name&quot;             &quot;Status&quot;                    &quot;Start.Date&quot;                &quot;End.Date&quot;                 
+##  [9] &quot;Temp.Op.Letter.Issued&quot;     &quot;Temp.Op.Letter.Expiration&quot; &quot;License.Category&quot;          &quot;Application.Category&quot;     
+## [13] &quot;Building.Number&quot;           &quot;Street&quot;                    &quot;Street.2&quot;                  &quot;Unit.Type&quot;                
+## [17] &quot;Unit&quot;                      &quot;Description&quot;               &quot;City&quot;                      &quot;State&quot;                    
+## [21] &quot;Zip&quot;                       &quot;Contact.Phone&quot;             &quot;Longitude&quot;                 &quot;Latitude&quot;                 
+## [25] &quot;Active.Vehicles&quot;</code></pre>
 
 </div>
 </div>
