@@ -156,7 +156,8 @@ Industry_creation_year_count = Industry_creationyear_count %>% drop_na(creation_
 Total_license_creation_year = ggplot(Industry_creation_year_count, aes(creation_year, Industry)) +
   geom_tile(aes(fill = count)) +
   theme_ipsum() +
-  scale_fill_distiller(palette = "Spectral") +
+  scale_fill_distiller(palette = "Spectral", direction=2, trans = "log10", 
+                       name = "log10(Similarity)") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) 
 
 ggplotly(Total_license_creation_year)
@@ -175,7 +176,8 @@ Industry_creation_year_status_count = Industry_creation_year_status_count %>% dr
   filter(creation_year > 1999)
 Industry_license_creation_year_status_count = ggplot(Industry_creation_year_status_count, aes(creation_year, Industry)) +
   geom_tile(aes(fill = count)) +
-  scale_fill_distiller(palette = "Spectral") +
+  scale_fill_distiller(palette = "Spectral", direction=2, trans = "log10", 
+                       name = "log10(Similarity)") +
   facet_wrap(~`License Status`) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
@@ -198,7 +200,8 @@ Industry_creation_year_type_count_pe = Industry_creation_year_type_count %>% dro
 
 Industry_license_creation_year_type_count1 = ggplot(Industry_creation_year_type_count_bu, aes(creation_year, Industry)) +
   geom_tile(aes(fill = count)) +
-  scale_fill_distiller(palette = "Spectral") +
+  scale_fill_distiller(palette = "Spectral", direction=2, trans = "log10", 
+                       name = "log10(Similarity)") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))  +
   ggtitle("Industry vs Creation_Year based on Business licence type")
 
@@ -208,7 +211,8 @@ ggplotly(Industry_license_creation_year_type_count1)
 ```{r,fig.width = 8,fig.height = 4}
 Industry_license_creation_year_type_count2 = ggplot(Industry_creation_year_type_count_pe, aes(creation_year, Industry)) +
   geom_tile(aes(fill = count)) +
-  scale_fill_distiller(palette = "Spectral") +
+  scale_fill_distiller(palette = "Spectral", direction=2, trans = "log10", 
+                       name = "log10(Similarity)") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Industry vs Creation_Year based on Individual licence type")
 
@@ -228,7 +232,7 @@ ridge_plot_dateDiff
 Write-Up
 
 
-## Licence application acceptance rate across borough over 20 years
+## Licence application acceptance rate across borough over 10 years
 ```{r,fig.width = 8,fig.height = 8}
 df_nyc_data_applications = read_csv("./dataset_applications.csv")
 df_nyc_data_applications_grouped = df_nyc_data_applications %>%
@@ -237,6 +241,7 @@ df_nyc_data_applications_grouped = df_nyc_data_applications %>%
   ungroup()
 
 df_nyc_data_applications_grouped = df_nyc_data_applications_grouped %>% 
+  filter(Decision.Date > 2009) %>%
   drop_na("Decision.Date") %>% 
   pivot_wider(names_from = Status, values_from = count)
 

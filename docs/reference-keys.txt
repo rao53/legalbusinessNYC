@@ -13,7 +13,7 @@ marginalization-of-licences-across-boroughs
 licence-count-across-industries-based-on-statustype
 total-licences-across-industries-over-20-years
 duration-of-licences-in-days-for-various-industries
-licence-application-acceptance-rate-across-borough-over-20-years
+licence-application-acceptance-rate-across-borough-over-10-years
 interactive-component
 nyc-business-license-acceptance-rates
 conclusion
