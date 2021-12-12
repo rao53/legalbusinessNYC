@@ -86,7 +86,11 @@
 <li class="chapter" data-level="2.1" data-path="data-sources.html"><a href="data-sources.html#legally-operating-businesses-in-new-york-city-dataset"><i class="fa fa-check"></i><b>2.1</b> Legally Operating Businesses in New York City Dataset</a></li>
 <li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#license-applications-in-new-york-city-dataset"><i class="fa fa-check"></i><b>2.2</b> License Applications in New York City Dataset</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#legally-operating-businesses"><i class="fa fa-check"></i><b>3.1</b> Legally Operating Businesses</a></li>
+<li class="chapter" data-level="3.2" data-path="data-transformation.html"><a href="data-transformation.html#license-applications"><i class="fa fa-check"></i><b>3.2</b> License Applications</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
@@ -120,7 +124,17 @@
             <section class="normal" id="section-">
 <div id="data-transformation" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
+<p>We are using two datasets containing information about different types of licences issued in and around New York City. Our primal data set is the legally operating businesses data set containing most of the information we need and is used for the majority of the plots we generate. The licence applications dataset is used to plot the acceptance ratio across various boroughs. The challenge was to create a column which was similar to the address borough column in the legally operating businesses dataset as the column closest to that in the license applications was the City column which has Manhattan and Queens missing as Boroughs and has a lot of other entries as well which are not present in the Address borough column in our primal dataset.</p>
+<div id="legally-operating-businesses" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Legally Operating Businesses</h2>
+<p>On plotting the count of licences across the Address Borough column we notice that a lot of boroughs have been named twice. And the duplicate names with all capital letters have negligible rows in the dataset. Hence, we remove the entries with Address Borough values as “BRONX”,“QUEENS”,“BROOKLYN” and “MANHATTAN”.</p>
+<p>To plot a graph showing the length of the licenses given to various industries we calculated the number of days between license creation and expiration date. During this we found that a lot of these values are negative. Hence we removed all such cases as well as it does not make sense for the license to expire before it is created.</p>
+<p>While doing the missing data analysis mentioned in Chapter 4 we found out that the columns Secondary Address Street Name, Detail and Business Name 2 have more than 75% values missing. Since these columns are not used by us anywhere, we remove these as well.</p>
+</div>
+<div id="license-applications" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> License Applications</h2>
 
+</div>
 </div>
             </section>
 
