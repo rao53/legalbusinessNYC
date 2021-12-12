@@ -3,6 +3,8 @@ data-sources
 legally-operating-businesses-in-new-york-city-dataset
 license-applications-in-new-york-city-dataset
 data-transformation
+legally-operating-businesses
+license-applications
 missing-values
 results
 total-licences-across-industries
