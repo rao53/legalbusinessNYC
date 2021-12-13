@@ -98,7 +98,10 @@
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#total-licences-across-industries"><i class="fa fa-check"></i><b>5.1</b> Total licences across industries</a></li>
-<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#popularity-of-businesses-across-boroughs"><i class="fa fa-check"></i><b>5.2</b> Popularity of businesses across boroughs</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#popularity-of-businesses-across-boroughs"><i class="fa fa-check"></i><b>5.2</b> Popularity of businesses across boroughs</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#top-10-business-licences-across-boroughs"><i class="fa fa-check"></i><b>5.2.1</b> Top 10 business licences across boroughs</a></li>
+</ul></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#licence-count-across-industries-based-on-statustype"><i class="fa fa-check"></i><b>5.3</b> Licence count across industries based on status/type</a></li>
 <li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#total-licences-across-industries-over-20-years"><i class="fa fa-check"></i><b>5.4</b> Total licences across industries over 20 years</a></li>
 <li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#licence-application-acceptance-rate-across-borough-over-10-years"><i class="fa fa-check"></i><b>5.5</b> Licence application acceptance rate across borough over 10 years</a></li>
@@ -132,11 +135,11 @@
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
 <div id="legally-operating-businesses-1" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Legally Operating Businesses</h2>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-125-1.png" width="1728" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="1728" /></p>
 <p>We get 364 missing patterns in our dataset which we believe is reasonable since we had ~300,000 observations in our data.</p>
 <p>Further, our original dataset has 27 columns in total. As we can see 3 columns have more than 75% values missing. These columns are Secondary Street Name, Detail (open text variable describing the business), and Business Name 2 (for eg. McDonald’s BN2 is McD). We drop these 3 columns to improve our missing pattern analysis.</p>
 <p>To improve the visibility of our graph further we drop all the missing patterns with count &lt;=50 (&lt;0.016% observations). This step simply help us in building a neater and more readable graphic without losing out on any crucial information. Note that these two steps won’t have any impact on the percentage of missing patterns or percentage of missing column values since they both are essentially just trimming the height and width of the original graphic.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-127-1.png" width="1728" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-23-1.png" width="1728" /></p>
 <p>Observations:
 </br>
 1. Post processing the dataset we find 30 most frequently occurring missing patterns.

@@ -10,6 +10,7 @@ legally-operating-businesses-1
 results
 total-licences-across-industries
 popularity-of-businesses-across-boroughs
+top-10-business-licences-across-boroughs
 licence-count-across-industries-based-on-statustype
 total-licences-across-industries-over-20-years
 licence-application-acceptance-rate-across-borough-over-10-years
