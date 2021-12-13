@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Data transformation | Legal businesses in NYC</title>
-  <meta name="description" content="Chapter 3 Data transformation | Legal businesses in NYC" />
+  <title>Legal businesses in NYC</title>
+  <meta name="description" content="Legal businesses in NYC" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Data transformation | Legal businesses in NYC" />
+  <meta property="og:title" content="Legal businesses in NYC" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Data transformation | Legal businesses in NYC" />
+  <meta name="twitter:title" content="Legal businesses in NYC" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="data-sources.html"/>
-<link rel="next" href="missing-values.html"/>
+
+<link rel="next" href="data-sources.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -98,10 +98,7 @@
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#total-licences-across-industries"><i class="fa fa-check"></i><b>5.1</b> Total licences across industries</a></li>
-<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#popularity-of-businesses-across-boroughs"><i class="fa fa-check"></i><b>5.2</b> Popularity of businesses across boroughs</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#top-10-business-licences-across-boroughs"><i class="fa fa-check"></i><b>5.2.1</b> Top 10 business licences across boroughs</a></li>
-</ul></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#popularity-of-businesses-across-boroughs"><i class="fa fa-check"></i><b>5.2</b> Popularity of businesses across boroughs</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#licence-count-across-industries-based-on-statustype"><i class="fa fa-check"></i><b>5.3</b> Licence count across industries based on status/type</a></li>
 <li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#total-licences-across-industries-over-20-years"><i class="fa fa-check"></i><b>5.4</b> Total licences across industries over 20 years</a></li>
 <li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#licence-application-acceptance-rate-across-borough-over-10-years"><i class="fa fa-check"></i><b>5.5</b> Licence application acceptance rate across borough over 10 years</a></li>
@@ -131,28 +128,28 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-transformation" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
-<p>The legally operating businesses data set is the primary data set containing most of the information we need and is used for the majority of the plots generated. The licence applications dataset is used to plot the acceptance ratio across various boroughs. The challenge was to create a column which was similar to the address borough column in the legally operating businesses dataset as the column closest to that in the license applications was the City column which has Manhattan and Queens missing as Boroughs and has a lot of other entries as well which are not present in the Address borough column in our primal dataset.</p>
-<div id="legally-operating-businesses" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Legally Operating Businesses</h2>
-<p>On plotting the count of licences across the Address Borough column we notice that a lot of boroughs have been named twice. And the duplicate names with all capital letters have negligible rows in the dataset. Hence, we remove the entries with Address Borough values as “BRONX”, “QUEENS”, “BROOKLYN”, “MANHATTAN” and “Outside NYC” as we are only considering boroughs in New York.</p>
-<p>To plot a graph showing the length of the licenses given to various industries we calculated the number of days between license creation and expiration date. During this we found that a lot of these values are negative. Hence we removed all such cases as well as it does not make sense for the license to expire before it is created.</p>
-<p>While doing the missing data analysis mentioned in Chapter 4 we found out that the columns Secondary Address Street Name, Detail and Business Name 2 have more than 75% values missing. Since these columns are not used by us anywhere, we remove these as well.</p>
+<div id="header">
+<h1 class="title">Legal businesses in NYC</h1>
+<p class="author"><em>Ridwan Olawin, Sarthak Arora, Arnav Saxena</em></p>
+<p class="date"><em>2021-12-12</em></p>
 </div>
-<div id="license-applications" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> License Applications</h2>
-<p>We have created a new dataset having columns corresponding to the year of the “End Date” column, the “Status” column and the “License.Category” column from the License Applications dataset. We also have created a new column called “nyc.data.borough” which tells as to which borough the license application belongs to. This column was created by looking at the Zip Codes corresponding to the 5 boroughs i.e. Brooklyn, Staten Island, Bronx, Queens and Manhattan in the Legally Operating Businesses dataset and then mapping Zip codes in the License applications dataset to these boroughs. This enables us to see the acceptance rates in various boroughs across NYC over the years.</p>
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<p>In this project we have used the data on legal business operating in NYC to analyze the popularity of different businesses in the city as well as understand any disparity in terms of business licenses issued across different neighborhoods of the city.</p>
+<p>We have essentially answered the following three questions through this work:</p>
+<p><strong>Question 1</strong>: What businesses/industries are popular in different neighborhoods?</p>
+<p><strong>Question 2</strong>: Change in trends in business types and number of licenses given over time? What impact did COVID have on the same? What impact did various laws passed in the past have on them?</p>
+<p><strong>Question 3</strong>: Is there any bias involved when it comes to issuing business licenses in marginalized neighborhoods?</p>
+<p>To answer these questions, we have analyzed two datasets provided by the Department of Consumer Affairs and reported our results in the coming sections. We have also created an interactive app using R shiny for the readers to play around with the dataset and figure out the answer for some of these questions by themselves.</p>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="data-sources.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="missing-values.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+<a href="data-sources.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -183,7 +180,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rao53/legalbusinessNYC/edit/main/03-cleaning.Rmd",
+"link": "https://github.com/rao53/legalbusinessNYC/edit/main/index.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -191,7 +188,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/rao53/legalbusinessNYC/blob/main/03-cleaning.Rmd",
+"link": "https://github.com/rao53/legalbusinessNYC/blob/main/index.Rmd",
 "text": null
 },
 "download": null,

@@ -1,6 +1,6 @@
 # Data transformation
 
-We are using two datasets containing information about different types of licences issued in and around New York City. Our primal data set is the legally operating businesses data set containing most of the information we need and is used for the majority of the plots we generate. The licence applications dataset is used to plot the acceptance ratio across various boroughs. The challenge was to create a column which was similar to the address borough column in the legally operating businesses dataset as the column closest to that in the license applications was the City column which has Manhattan and Queens missing as Boroughs and has a lot of other entries as well which are not present in the Address borough column in our primal dataset. 
+The legally operating businesses data set is the primary data set containing most of the information we need and is used for the majority of the plots generated. The licence applications dataset is used to plot the acceptance ratio across various boroughs. The challenge was to create a column which was similar to the address borough column in the legally operating businesses dataset as the column closest to that in the license applications was the City column which has Manhattan and Queens missing as Boroughs and has a lot of other entries as well which are not present in the Address borough column in our primal dataset. 
 
 ## Legally Operating Businesses
 
