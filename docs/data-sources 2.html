@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Data transformation | Legal businesses in NYC</title>
-  <meta name="description" content="Chapter 3 Data transformation | Legal businesses in NYC" />
+  <title>Chapter 2 Data sources | Legal businesses in NYC</title>
+  <meta name="description" content="Chapter 2 Data sources | Legal businesses in NYC" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Data transformation | Legal businesses in NYC" />
+  <meta property="og:title" content="Chapter 2 Data sources | Legal businesses in NYC" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Data transformation | Legal businesses in NYC" />
+  <meta name="twitter:title" content="Chapter 2 Data sources | Legal businesses in NYC" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="data-sources.html"/>
-<link rel="next" href="missing-values.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="data-transformation.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -98,10 +98,7 @@
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#total-licences-across-industries"><i class="fa fa-check"></i><b>5.1</b> Total licences across industries</a></li>
-<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#popularity-of-businesses-across-boroughs"><i class="fa fa-check"></i><b>5.2</b> Popularity of businesses across boroughs</a>
-<ul>
-<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#top-10-business-licences-across-boroughs"><i class="fa fa-check"></i><b>5.2.1</b> Top 10 business licences across boroughs</a></li>
-</ul></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#popularity-of-businesses-across-boroughs"><i class="fa fa-check"></i><b>5.2</b> Popularity of businesses across boroughs</a></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#licence-count-across-industries-based-on-statustype"><i class="fa fa-check"></i><b>5.3</b> Licence count across industries based on status/type</a></li>
 <li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#total-licences-across-industries-over-20-years"><i class="fa fa-check"></i><b>5.4</b> Total licences across industries over 20 years</a></li>
 <li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#licence-application-acceptance-rate-across-borough-over-10-years"><i class="fa fa-check"></i><b>5.5</b> Licence application acceptance rate across borough over 10 years</a></li>
@@ -131,18 +128,53 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-transformation" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
-<p>The legally operating businesses data set is the primary data set containing most of the information we need and is used for the majority of the plots generated. The licence applications dataset is used to plot the acceptance ratio across various boroughs. The challenge was to create a column which was similar to the address borough column in the legally operating businesses dataset as the column closest to that in the license applications was the City column which has Manhattan and Queens missing as Boroughs and has a lot of other entries as well which are not present in the Address borough column in our primal dataset.</p>
-<div id="legally-operating-businesses" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Legally Operating Businesses</h2>
-<p>On plotting the count of licences across the Address Borough column we notice that a lot of boroughs have been named twice. And the duplicate names with all capital letters have negligible rows in the dataset. Hence, we remove the entries with Address Borough values as “BRONX”, “QUEENS”, “BROOKLYN”, “MANHATTAN” and “Outside NYC” as we are only considering boroughs in New York.</p>
-<p>To plot a graph showing the length of the licenses given to various industries we calculated the number of days between license creation and expiration date. During this we found that a lot of these values are negative. Hence we removed all such cases as well as it does not make sense for the license to expire before it is created.</p>
-<p>While doing the missing data analysis mentioned in Chapter 4 we found out that the columns Secondary Address Street Name, Detail and Business Name 2 have more than 75% values missing. Since these columns are not used by us anywhere, we remove these as well.</p>
+<div id="data-sources" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Data sources</h1>
+<p>To answer the questions discussed in the previous sections, we used the data on license applications offered by the Department of Consumer Affairs (DCA), New York City. In particular, we used the following two datasets:</p>
+<div id="legally-operating-businesses-in-new-york-city-dataset" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Legally Operating Businesses in New York City Dataset</h2>
+<p><strong>Source :</strong>
+Legally Operating Businesses. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <a href="https://data.cityofnewyork.us/Business/Legally-Operating-Businesses/w7w3-xahh" class="uri">https://data.cityofnewyork.us/Business/Legally-Operating-Businesses/w7w3-xahh</a>.</p>
+<p>This data set features businesses/individuals holding a DCA license so that they may legally operate in New York City. It specifically focuses on licenses that were given starting in the 1970s. Of the many variables, the following were of particular interest to us:</p>
+<ul>
+<li>Business Industry type (Tobacco dealer, Home Improvement Contractor, etc)</li>
+<li>Business location (includes Zip, Borough, Council District, Longitudes, Latitudes)</li>
+<li>License type (Individual vs Business)</li>
+<li>License start and expiration dates</li>
+</ul>
+<p>Note: Sightseeing guides and temporary street fair vendors are not included in this data set.</p>
+<p><strong>Due to the COVID-19 pandemic, DCA extended certain license expiration dates and renewal application deadlines which are not reflected in this data set. For more information, visit</strong> <a href="https://www1.nyc.gov/site/dca/businesses/licenses.page" class="uri">https://www1.nyc.gov/site/dca/businesses/licenses.page</a>.</p>
+<p><strong>Variables of the legally operating business dataset</strong></p>
+<pre><code>##  [1] &quot;DCA.License.Number&quot;            &quot;License.Type&quot;                  &quot;License.Expiration.Date&quot;      
+##  [4] &quot;License.Status&quot;                &quot;License.Creation.Date&quot;         &quot;Industry&quot;                     
+##  [7] &quot;Business.Name&quot;                 &quot;Business.Name.2&quot;               &quot;Address.Building&quot;             
+## [10] &quot;Address.Street.Name&quot;           &quot;Secondary.Address.Street.Name&quot; &quot;Address.City&quot;                 
+## [13] &quot;Address.State&quot;                 &quot;Address.ZIP&quot;                   &quot;Contact.Phone.Number&quot;         
+## [16] &quot;Address.Borough&quot;               &quot;Borough.Code&quot;                  &quot;Community.Board&quot;              
+## [19] &quot;Council.District&quot;              &quot;BIN&quot;                           &quot;BBL&quot;                          
+## [22] &quot;NTA&quot;                           &quot;Census.Tract&quot;                  &quot;Detail&quot;                       
+## [25] &quot;Longitude&quot;                     &quot;Latitude&quot;                      &quot;Location&quot;</code></pre>
 </div>
-<div id="license-applications" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> License Applications</h2>
-<p>We have created a new dataset having columns corresponding to the year of the “End Date” column, the “Status” column and the “License.Category” column from the License Applications dataset. We also have created a new column called “nyc.data.borough” which tells as to which borough the license application belongs to. This column was created by looking at the Zip Codes corresponding to the 5 boroughs i.e. Brooklyn, Staten Island, Bronx, Queens and Manhattan in the Legally Operating Businesses dataset and then mapping Zip codes in the License applications dataset to these boroughs. This enables us to see the acceptance rates in various boroughs across NYC over the years.</p>
+<div id="license-applications-in-new-york-city-dataset" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> License Applications in New York City Dataset</h2>
+<p><strong>Source :</strong>
+License Applications. Data provided by Agency: Department of Consumer Affairs (DCA). Available at <a href="https://data.cityofnewyork.us/Business/License-Applications/ptev-4hud" class="uri">https://data.cityofnewyork.us/Business/License-Applications/ptev-4hud</a>.</p>
+<p>This data set features license applications received during the last and current calendar years (2020 and 2021), including applications where a license was issued, denied, withdrawn, or remains pending. For a list of legally operating businesses, please refer to the DCA – Legally Operating Businesses data set referenced above. The following variables were of interest to us:</p>
+<ul>
+<li>Business Industry type (Tobacco dealer, Home Improvement Contractor, etc)</li>
+<li>Business location (includes Zip, Borough, Council District, Longitudes, Latitudes)</li>
+<li>Application status (Issued, Denied, Withdrawn, Pending)</li>
+<li>License acceptance date</li>
+<li>Application Type</li>
+</ul>
+<p><strong>Variables of the License Applications in New York City</strong></p>
+<pre><code>##  [1] &quot;Application.ID&quot;            &quot;License.Number&quot;            &quot;License.Type&quot;              &quot;Application.or.Renewal&quot;   
+##  [5] &quot;Business.Name&quot;             &quot;Status&quot;                    &quot;Start.Date&quot;                &quot;End.Date&quot;                 
+##  [9] &quot;Temp.Op.Letter.Issued&quot;     &quot;Temp.Op.Letter.Expiration&quot; &quot;License.Category&quot;          &quot;Application.Category&quot;     
+## [13] &quot;Building.Number&quot;           &quot;Street&quot;                    &quot;Street.2&quot;                  &quot;Unit.Type&quot;                
+## [17] &quot;Unit&quot;                      &quot;Description&quot;               &quot;City&quot;                      &quot;State&quot;                    
+## [21] &quot;Zip&quot;                       &quot;Contact.Phone&quot;             &quot;Longitude&quot;                 &quot;Latitude&quot;                 
+## [25] &quot;Active.Vehicles&quot;</code></pre>
 
 </div>
 </div>
@@ -151,8 +183,8 @@
           </div>
         </div>
       </div>
-<a href="data-sources.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="missing-values.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-transformation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -183,7 +215,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rao53/legalbusinessNYC/edit/main/03-cleaning.Rmd",
+"link": "https://github.com/rao53/legalbusinessNYC/edit/main/02-data.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -191,7 +223,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/rao53/legalbusinessNYC/blob/main/03-cleaning.Rmd",
+"link": "https://github.com/rao53/legalbusinessNYC/blob/main/02-data.Rmd",
 "text": null
 },
 "download": null,

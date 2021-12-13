@@ -4,10 +4,8 @@ In this project, we analyzed the business licences data from DCA, New York City 
 
 While analyzing the presence of businesses in different neighborhoods we found that Brooklyn and Queens are the most popular boroughs to set up any business, more so for home improvement contractors and tobacco dealers. Manhattan however, topped the charts when it comes to sidewalk cafes and garages. 
 
-When observing license issuance trends over years, we found that for most of the industries there has been a decline in the number of licenses issued. Via additional online search, we were able to pin down the reasons behind the same for certain industries. As expected, the laws and regulations adopted by the authorities had huge impact in the number of licenses issued in a particular industry. We also observed some quantifiable impact of COVID specifically on businesses like ticket sellers, movie projectionist etc which have no active licenses as of December 2021.
+When observing license issuance trends over years, we found that for most of the industries there has been a decline in the number of licenses issued. Via additional online search, we were able to pin down the reasons behind the same for certain industries. As expected, the laws and regulations adopted by the authorities had huge impact in the number of licenses issued for a particular industry. We also observed some quantifiable impact of COVID specifically on businesses like ticket sellers, movie projectionist etc which have no active licenses as of December 2021.
 
-Lastly, through our interactive component and section 5.6, we observe that Bronx historically has had marginally lower license acceptance rates over years which further exacerbated during the dip in 2017.
+Lastly, through our interactive component and section 5.4, we observe that Bronx historically has had marginally lower license acceptance rates over years which further exacerbated during the dip in 2017.
 
-In conclusion, this exercise helped us understand the key essence of this class - code is not the difficult part of exploring the data. The difficult part is asking the right questions.
-
-We struggled at times with not finding clearer trends, but one of the most important take-aways from this project was how easy it is to stretch and squeeze the data to make trends appear and derive useful insights from them. 
+In conclusion, this exercise helped us understand the key essence of this class - code is not the difficult part of exploring the data. The difficult part is asking the right questions. We struggled at times with not finding clearer trends, but one of the most important take-aways from this project was how easy it is to stretch and squeeze the data to make trends appear and derive useful insights from them. 

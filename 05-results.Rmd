@@ -43,7 +43,7 @@ Total_Count_Across_Industries = df_nyc_data_clean_borough %>%
 
 Total_Count_Across_Industries
 ```
-We can see that the home improvement and tobacco industry attains the maximum number of licenses and forms a cluster of their own.
+We can see that the home improvement and tobacco dealer attains the maximum number of licenses and forms a cluster of their own.
 
 ## Popularity of businesses across boroughs
 ```{r,fig.width = 8,fig.height = 8}
@@ -170,8 +170,16 @@ Total_license_creation_year = ggplot(Industry_creation_year_count, aes(creation_
 
 ggplotly(Total_license_creation_year)
 ```
-We can clearly see that the tobacco retail dealer licenses have gradually decreased over the last 20 years.
-The electronic cigarette dealership licenses did not exist before 2018 as these dealerships were legally given licenses in 2018. We can see the sudden increase in the number of licenses in 2018 and how it drastically drops as a lot of studies showed how teenagers were getting addicted to vapes and eventually in July of 2020 they were banned in the city of New York.
+
+We observe a startling fact that the number of new licenses issued across years and across most industries has been on a decline. However, we see a slight increase in the number of licenses from 2020 to 2021 most likely because of business activities going back to the pre-COVID levels.
+
+We noticed some prominent industry specific trends as follows:
+
+1. Electronic cigarette dealer - Only started in 2018 - that’s when it became legal [LINK](https://www1.nyc.gov/site/doh/health/health-topics/smoking-e-cigarettes.page)
+
+2. Tobacco retail dealer - has been on decline steadily. Further the authorities passed a law in 2018 capping the number of tobacco and e-cig retailers to 50% of the players in the respective industries in 2018 [LINK](https://tobaccopolicycenter.org/tobacco-control/laws-of-new-york/nyc-tobacco-retail-licensing/)
+
+3. Parking Lot: The number of parking lots has decreased considerably across years most likely due to the efforts by authorities (such as increasing parking charges etc) to dissuade public from buying cars
 
 
 ```{r,fig.width = 8,fig.height = 10}
@@ -230,16 +238,7 @@ Industry_license_creation_year_type_count2 = ggplot(Industry_creation_year_type_
 
 ggplotly(Industry_license_creation_year_type_count2)
 ```
-We observe a startling fact that the number of new licenses issued across years and across most industries has been on a decline. However, we see a slight increase in the number of licenses from 2020 to 2021 most likely because of business activities going back to the pre-COVID levels.
-
-We noticed some prominent industry specific trends as follows:
-
-1. Electronic cigarette dealer - Only started in 2018 - that’s when it became legal [LINK](https://www1.nyc.gov/site/doh/health/health-topics/smoking-e-cigarettes.page)
-
-2. Tobacco retail dealer - has been on decline steadily. Further the authorities passed a law in 2018 capping the number of tobacco and e-cig retailers to 50% of the players in the respective industries in 2018 [LINK](https://tobaccopolicycenter.org/tobacco-control/laws-of-new-york/nyc-tobacco-retail-licensing/)
-
-3. Parking Lot: The number of parking lots has decreased considerably across years most likely due to the efforts by authorities (such as increasing parking charges etc) to dissuade public from buying cars
-
+Looking at a lot of Industries that have Individual license types we can see that there has been an increase in the number of licenses issued from 2020 to 2021, like Pedicab Drivers, Ticket sellers, Tow Truck Drivers etc. This could be because of the relaxations in COVID-19 protocols as we moved into 2021. The same trend can be observed for a lot of industries with licence type of business.
 
 ## Licence application acceptance rate across borough over 10 years
 ```{r,fig.width = 8,fig.height = 8}
