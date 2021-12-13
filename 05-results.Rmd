@@ -62,8 +62,10 @@ Licence_Count_Across_Boroughs = ggplot(borough_license_count, aes(x = count, y =
   ylab("Industry")
 Licence_Count_Across_Boroughs
 ```
+Brooklyn and Queens turn out to be the most popular neighborhoods for setting up any business probably due to lower cost of running businesses there (lower rent, cheaper labour etc.). 
 
 
+### Top 10 business licences across boroughs
 ```{r, fig.width = 8,fig.height = 8}
 df_test = df_nyc_data_clean_borough %>%
   drop_na(`Address Borough`) %>%
@@ -80,7 +82,6 @@ df_cur = df_test %>%
   mutate(`Address Borough` = as.factor(`Address Borough`),
          Industry = reorder_within(Industry, count, `Address Borough`)) %>%
   ggplot(aes(fill=`Address Borough`, y=count, x=Industry)) +
-  # geom_bar(position="dodge", stat="identity") +
   geom_col(show.legend = FALSE) +
   xlab("Industry") +
   facet_wrap(~`Address Borough`, scales = "free_y") +
@@ -91,8 +92,7 @@ df_cur = df_test %>%
 
 df_cur
 ```
-Write - Up
-
+In this plot, we have dived deep further and plotted the top 10 popular industries across each borough. As one might expect, garages and side-walk cafes make their appearances as top 10 businesses only in Manhattan.
 
 
 ## Licence count across industries based on status/type
@@ -142,8 +142,7 @@ Licence_Count_based_type = ggplot(license_type_count, aes(x = count, y = reorder
 
 Licence_Count_based_type
 ```
-Looking at the split between license types we see that there are no industries with both License type Individual and Business. Most of the industries have license type Business, only a few Industries like Locksmith, projectionist, home improvement salesperson, general vendors etc. have been issued licenses of individual type.
-
+We observed that no license was being classified to Individual as well as businesses together. Most of the industries have license type Business and only a few Industries like Locksmith, projectionist, home improvement salesperson, general vendors etc. have been issued licenses of individual type.The figure above also confirms that leaving Tobacco dealers and home improvement contractors, the number of licenses across both individual and business type is comparable.  
 
 
 ## Total licences across industries over 20 years
@@ -193,8 +192,9 @@ Industry_license_creation_year_status_count = ggplot(Industry_creation_year_stat
 
 ggplotly(Industry_license_creation_year_status_count)
 ```
-For the heatmap split between active and inactive licenses we can clearly see that Industries like Ticket Seller Businesses, Sightseeing Bus, Motion Picture Projectionist, Catering Establishments, Cabaret etc. have no active licenses. And this makes sense because all these industries have been heavily affected by covid.
+The above graph also gives us an indication of the longevity of licenses for different businesses in the city. As we can see on the heatmap above, most of the active businesses had their licenses created less than 5 years back while conversely most inactive businesses had their licenses made more than 5 years back. We further did a deep dive into the license length in section 5.6.
 
+Furthermore, we can clearly see that Industries like Ticket Seller Businesses, Sightseeing Bus, Motion Picture Projectionist, Catering Establishments, Cabaret etc. have no active licenses at present probably because all these businesses have been heavily affected by covid and might not have recovered so far.
 
 ```{r,fig.width = 8,fig.height = 10}
 Industry_creation_year_type_count <- df_nyc_data_clean_borough %>%
@@ -230,7 +230,15 @@ Industry_license_creation_year_type_count2 = ggplot(Industry_creation_year_type_
 
 ggplotly(Industry_license_creation_year_type_count2)
 ```
-Write-Up
+We observe a startling fact that the number of new licenses issued across years and across most industries has been on a decline. However, we see a slight increase in the number of licenses from 2020 to 2021 most likely because of business activities going back to the pre-COVID levels.
+
+We noticed some prominent industry specific trends as follows:
+
+1. Electronic cigarette dealer - Only started in 2018 - that’s when it became legal [LINK](https://www1.nyc.gov/site/doh/health/health-topics/smoking-e-cigarettes.page)
+
+2. Tobacco retail dealer - has been on decline steadily. Further the authorities passed a law in 2018 capping the number of tobacco and e-cig retailers to 50% of the players in the respective industries in 2018 [LINK](https://tobaccopolicycenter.org/tobacco-control/laws-of-new-york/nyc-tobacco-retail-licensing/)
+
+3. Parking Lot: The number of parking lots has decreased considerably across years most likely due to the efforts by authorities (such as increasing parking charges etc) to dissuade public from buying cars
 
 
 ## Licence application acceptance rate across borough over 10 years
@@ -256,7 +264,7 @@ ggplot(df_nyc_data_applications_grouped, aes(x = Decision.Date, y = prop)) +
   xlab("Decision date") +
   ylab("Acceptance rate")
 ```
-Write-Up stuff
+We observe that Bronx has a lower acceptance rate compared to other boroughs in NYC, which was what we were expecting as Bronx is supposedly one of the Marginalized neighbourhoods. This decrease is further amplified in the year 2017 when we see a huge dip in acceptance rates across all the boroughs in NYC which is more prominent for the Bronx region. 
 
 
 ## Duration of licences in days for various industries
@@ -267,7 +275,7 @@ ridge_plot_dateDiff = ggplot(df_nyc_data_clean_dates, aes(date_diff, fct_reorder
   ylab("Industry")
 ridge_plot_dateDiff
 ```
-Write-Up
+We can see that almost all of the industries are provided licenses of duration upto 2500 days i.e. about 7 years. There are a few exceptions like the Commercial Lesson and Locksmith industries which are multi modal and have been given licenses which last for more than 10 years. The y axis is ordered based on the duration of licences, having high duration licences as we go up the axis. 
 
 
 
