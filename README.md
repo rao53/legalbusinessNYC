@@ -11,6 +11,7 @@ Question 3: Is there any bias involved when it comes to giving business licenses
 
 
 Link to bookdown: https://rao53.github.io/legalbusinessNYC/
+
 link to interactive component: https://definitely-arnav.shinyapps.io/NYC_Business_License_Acceptance_Rates/
 
 
