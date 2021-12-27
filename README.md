@@ -2,7 +2,7 @@
 
 In this project we have used the data on legal business operating in NYC to analyze the popularity of different businesses in the city as well as understand any disparity in terms of business licenses issued across different neighborhoods of the city.
 
-We have essentially answered the following three questions through this work:
+We have answered the following three questions through this work:
 
 **Potential Questions**
 
